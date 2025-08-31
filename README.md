@@ -8,7 +8,7 @@
 
 ## Desarrollo de la Actividad 1
 
-### 1. DevOps vs cascada tradicional (investigación + comparación)
+### **1. DevOps vs cascada tradicional (investigación + comparación)**
 
 **1.1.** DevOps vs Cascada
 
@@ -38,7 +38,7 @@ Trade-offs:
 - Velocidad: El proceso en estos casos son más lentos debido a que cada fase debe completarse y luego pasar por un proceso de validación antes de pasar a la siguiente fase.
 - Conformidad/seguridad: Para este caso, se prioriza la seguridad y el cumplimiento de normas envés de la rapidez, con el fin de reducir riesgos
 
-### 2. Ciclo tradicional de dos pasos y silos(limitaciones y anti-patrones)
+### **2. Ciclo tradicional de dos pasos y silos(limitaciones y anti-patrones)**
 
 **2.1.** Silos organizacionales
 
@@ -55,3 +55,19 @@ Los silos organizacionales son comunes en las organizaciones y pueden llegar a p
 
 - Throw over the wall: Es cuando el equipo de desarrollo culmina su parte y simplemente entrega el software trabajado al equipo de operaciones, sin haber ninguna comunicación ni colaboración entre ambos equipos. Esto causa un desequilibrio en la información, ya que el equipo de operaciones no podría entender bien los cambios y podría llevar a cometer errores.
 - Seguridad como auditoría tardía: En este caso,la seguridad revisa el software al final solamente, como si fuera una auditoría. Esto aumenta el costo de integración tardía debido a que los problemas de seguridad se detectan cuando ya es muy costoso y difícil arreglarlos.
+
+### **3. Principios y beneficios de DevOps (CI/CD, automatización, colaboración; Agile como precursor)**
+
+**3.1.** Describe CI y CD destacando **tamaño de cambios**, **pruebas automatizadas cercanas al código** y **colaboración**.
+
+El CI (integración continua, por sus siglas en inglés) trata en realizar cambios pequeños de manera seguida en el código y que se prueban automáticamente luego de pocos minutos de haber sido escritos. El CI ayuda a detectar errores de manera rápida, además de que fomenta la colaboración debido a que todos los desarrolladores integran sus avances de manera seguida. Ahora, el CD (entrega continua, por sus siglas en inglés) permite la automatización del despliegue de los cambios que se realizan, esto permite que lleguen a producción de forma rápida y segura.
+
+**3.2.** Explica cómo **una práctica Agile** (reuniones diarias, retrospectivas) alimenta decisiones del pipeline (qué se promueve, qué se bloquea).
+
+Una práctica agile puede ser las reuniones diarias (también conocidas como dailies) en un equipo de desarrollo, donde se permite que el equipo comparta bloqueos y avances. Si en el daily se detecta un problema en una funcionalidad, en esa misma reunión se puede decidir no promover ese cambio en el pipeline hasta que se corrija. Así se demuestra que las decisiones sobre qué se despliega o bloquea se basan y funcionan gracias a la comunicación continua de un equipo.
+
+**3.3.** Propón **un indicador observable** (no financiero) para medir mejora de colaboración Dev-Ops (por ejemplo, tiempo desde PR listo hasta despliegue en entorno de pruebas; proporción de rollbacks sin downtime).
+
+Un indicador podría ser el tiempo que transcurre desde que un pull request (PR) está listo hasta que se despliega en el entorno de pruebas.
+
+Para calcularlo sin necesidad de herramientas de pago, puede ser suficiente usar los metadatos de los PRs (momento de aprobación) y los registros de despliegue (fecha y hora en el que se aplicó el cambio). Al comparar ambos momentos, se consigue cuánto demora cada modificación en pasar de "lista" a "desplegado", lo cual permite evaluar la agilidad y también la coordinación entre eqquipos de desarrollo y operaciones.
