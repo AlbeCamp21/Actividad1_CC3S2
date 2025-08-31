@@ -71,3 +71,32 @@ Una práctica agile puede ser las reuniones diarias (también conocidas como dai
 Un indicador podría ser el tiempo que transcurre desde que un pull request (PR) está listo hasta que se despliega en el entorno de pruebas.
 
 Para calcularlo sin necesidad de herramientas de pago, puede ser suficiente usar los metadatos de los PRs (momento de aprobación) y los registros de despliegue (fecha y hora en el que se aplicó el cambio). Al comparar ambos momentos, se consigue cuánto demora cada modificación en pasar de "lista" a "desplegado", lo cual permite evaluar la agilidad y también la coordinación entre eqquipos de desarrollo y operaciones.
+
+### **4. Evolución a DevSecOps (seguridad desde el inicio: SAST/DAST; cambio cultural)**
+
+**4.1.** Diferencia **SAST** (estático, temprano) y **DAST** (dinámico, en ejecución), y ubícalos en el pipeline.
+
+El Static Application Security Testing (SAST) analiza el código fuente (binario también) antes de que la aplicación se ejecute, esto permite la detección de vulnerabilidades tempranamente, en la mayoría de casos en la fase de integración continua (CI). En otro caso, el Dynamic Application Security Testing (DAST) examina la aplicación que está en ejecución, buscando fallos en la seguridad mientras funciona, esto ocurre en la mayoría de casos después del despliegue en un entorno de pruebas en un pipelien.
+
+**4.2.** Define un **gate mínimo de seguridad** con **dos umbrales cuantitativos** (por ejemplo, "cualquier hallazgo crítico en componentes expuestos **bloquea** la promoción"; "cobertura mínima de pruebas de seguridad del X%").
+
+- Hallazgos críticos en componentes expuestos:
+    - Si se detecta al menos una vulnerabilidad catalogada como alta o crítica en servicios accesibles desde internet, se procede a bloquear automáticamente hasta que se corrija.
+- Cobertura mínima de pruebas de seguridad automatizadas (SAST y DAST):
+    - Se pide como mínimo un 80% de cobertura en el análisis del código.
+    - Si el umbral antes mencionado no se cumple, la promoción queda en espera de revisión y corrección.
+
+**4.3.** Incluye una **política de excepción** con **caducidad**, responsable y plan de corrección.
+
+En casos donde sea necesaria una excepción (por ejemplo, por restricciones de tiempo de despliegue o dependencia de terceros), se podría documentar una excepción de seguridad con algunas características necesarias:
+- Definición de un límite de vigencia, por ejemplo un máximo de 15 días desde su aprobación.
+- Asignación de un responsable, un lider que se comprometa a gestionar la corrección.
+- Definición de un plan de corrección, se trataría de un documento conciso donde se especifica cómo, quién y en qué momento se tratará con el riesgo pendiente.
+
+**4.4.** **Pregunta retadora:** ¿cómo evitar el "teatro de seguridad" (cumplir checklist sin reducir riesgo)? Propón **dos señales de eficacia** (disminución de hallazgos repetidos; reducción en tiempo de remediación) y cómo medirlas.
+
+El teatro de seguridad pasa cuando los equipos cumplen los checklist de controles sin que ello signifique necesariamente una reducción real de riesgos. Dos señales de eficacia que podrían ayudar a evitarlo podrían ser:
+- Disminución de hallazgos repetidos en reportes SAST/DAST
+    - Se podría comparar los reportes de seguridad entre releases y verificar si la recurrencia de vulnerabilidades ya conocidas se reduce de una manera progresiva.
+- Reducción en el tiempo promedio de solución
+    - Se calcularía cuántos días pasan desde que se detecta una vulnerabilidad hasta el momento que se despliega la correción. Si se detecta una reducción, entonces eso indicaría que las prácticas de seguridad son efectivas.
