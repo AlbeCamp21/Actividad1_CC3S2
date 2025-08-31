@@ -1,0 +1,1 @@
+1. Redondo, A. M. F., & Cárdenas, F. D. J. N. (2022). DevOps: un vistazo rápido. Ciencia Huasteca Boletín Científico de la Escuela Superior de Huejutla, 10(19), 35-40.
