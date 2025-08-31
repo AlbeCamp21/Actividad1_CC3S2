@@ -38,6 +38,8 @@ Trade-offs:
 - Velocidad: El proceso en estos casos son más lentos debido a que cada fase debe completarse y luego pasar por un proceso de validación antes de pasar a la siguiente fase.
 - Conformidad/seguridad: Para este caso, se prioriza la seguridad y el cumplimiento de normas envés de la rapidez, con el fin de reducir riesgos
 
+---
+
 ### **2. Ciclo tradicional de dos pasos y silos(limitaciones y anti-patrones)**
 
 **2.1.** Silos organizacionales
@@ -56,6 +58,8 @@ Los silos organizacionales son comunes en las organizaciones y pueden llegar a p
 - Throw over the wall: Es cuando el equipo de desarrollo culmina su parte y simplemente entrega el software trabajado al equipo de operaciones, sin haber ninguna comunicación ni colaboración entre ambos equipos. Esto causa un desequilibrio en la información, ya que el equipo de operaciones no podría entender bien los cambios y podría llevar a cometer errores.
 - Seguridad como auditoría tardía: En este caso,la seguridad revisa el software al final solamente, como si fuera una auditoría. Esto aumenta el costo de integración tardía debido a que los problemas de seguridad se detectan cuando ya es muy costoso y difícil arreglarlos.
 
+---
+
 ### **3. Principios y beneficios de DevOps (CI/CD, automatización, colaboración; Agile como precursor)**
 
 **3.1.** Describe CI y CD destacando **tamaño de cambios**, **pruebas automatizadas cercanas al código** y **colaboración**.
@@ -72,6 +76,8 @@ Un indicador podría ser el tiempo que transcurre desde que un pull request (PR)
 
 Para calcularlo sin necesidad de herramientas de pago, puede ser suficiente usar los metadatos de los PRs (momento de aprobación) y los registros de despliegue (fecha y hora en el que se aplicó el cambio). Al comparar ambos momentos, se consigue cuánto demora cada modificación en pasar de "lista" a "desplegado", lo cual permite evaluar la agilidad y también la coordinación entre eqquipos de desarrollo y operaciones.
 
+---
+
 ### **4. Evolución a DevSecOps (seguridad desde el inicio: SAST/DAST; cambio cultural)**
 
 **4.1.** Diferencia **SAST** (estático, temprano) y **DAST** (dinámico, en ejecución), y ubícalos en el pipeline.
@@ -81,10 +87,10 @@ El Static Application Security Testing (SAST) analiza el código fuente (binario
 **4.2.** Define un **gate mínimo de seguridad** con **dos umbrales cuantitativos** (por ejemplo, "cualquier hallazgo crítico en componentes expuestos **bloquea** la promoción"; "cobertura mínima de pruebas de seguridad del X%").
 
 - Hallazgos críticos en componentes expuestos:
-    - Si se detecta al menos una vulnerabilidad catalogada como alta o crítica en servicios accesibles desde internet, se procede a bloquear automáticamente hasta que se corrija.
+  - Si se detecta al menos una vulnerabilidad catalogada como alta o crítica en servicios accesibles desde internet, se procede a bloquear automáticamente hasta que se corrija.
 - Cobertura mínima de pruebas de seguridad automatizadas (SAST y DAST):
-    - Se pide como mínimo un 80% de cobertura en el análisis del código.
-    - Si el umbral antes mencionado no se cumple, la promoción queda en espera de revisión y corrección.
+  - Se pide como mínimo un 80% de cobertura en el análisis del código.
+  - Si el umbral antes mencionado no se cumple, la promoción queda en espera de revisión y corrección.
 
 **4.3.** Incluye una **política de excepción** con **caducidad**, responsable y plan de corrección.
 
@@ -97,6 +103,6 @@ En casos donde sea necesaria una excepción (por ejemplo, por restricciones de t
 
 El teatro de seguridad pasa cuando los equipos cumplen los checklist de controles sin que ello signifique necesariamente una reducción real de riesgos. Dos señales de eficacia que podrían ayudar a evitarlo podrían ser:
 - Disminución de hallazgos repetidos en reportes SAST/DAST
-    - Se podría comparar los reportes de seguridad entre releases y verificar si la recurrencia de vulnerabilidades ya conocidas se reduce de una manera progresiva.
+  - Se podría comparar los reportes de seguridad entre releases y verificar si la recurrencia de vulnerabilidades ya conocidas se reduce de una manera progresiva.
 - Reducción en el tiempo promedio de solución
-    - Se calcularía cuántos días pasan desde que se detecta una vulnerabilidad hasta el momento que se despliega la correción. Si se detecta una reducción, entonces eso indicaría que las prácticas de seguridad son efectivas.
+  - Se calcularía cuántos días pasan desde que se detecta una vulnerabilidad hasta el momento que se despliega la correción. Si se detecta una reducción, entonces eso indicaría que las prácticas de seguridad son efectivas.
