@@ -146,3 +146,44 @@ Un KPI primario podría ser la tasa de errores de código 5xx. Pongamos un ejemp
 Si un KPI técnico se mantiene bien pero cae una métrica de producto (como la conversión, por ejemplo), entonces sería un indicativo de que algo no está funcionando de manera correcta para el usuario, aunque el sistema no muestre ningun error técnicamente.
 
 Es debido a esto que ambos tipos de métricas deberían estar en el gate, así se aseguraría estabilidad por las técnicas y las de producto asegurarían que el cambio realmente aporte valor sin afectar la experiencia del usuario. (Amazon Web Services, s. f.)
+
+### **6 Fundamentos prácticos sin comandos (evidencia mínima)**
+
+Realiza comprobaciones **con herramientas estándar**, pero **no** pegues los comandos. En el README escribe los **hallazgos** y la **interpretación**. Adjunta tus capturas en `imagenes/` y **marca** los campos relevantes (códigos, cabeceras, TTL, CN/SAN, fechas, puertos).
+
+**6.1.** HTTP - contrato observable
+
+   * Reporta: **método**, **código de estado** y **dos cabeceras** clave (por ejemplo, una de control de caché y otra de traza/diagnóstico).
+   * Explica por qué esas cabeceras influyen en **rendimiento**, **caché** u **observabilidad**.
+   * **Captura:** `imagenes/http-evidencia.png`, con los campos resaltados.
+
+**6.2.** DNS - nombres y TTL
+
+   * Reporta: **tipo de registro** (A o CNAME) y **TTL** de un dominio.
+   * Explica cómo el **TTL** afecta **rollbacks** y cambios de IP (propagación, ventanas de inconsistencia).
+   * **Captura:** `imagenes/dns-ttl.png`, con el TTL destacado.
+
+**6.3.** TLS - seguridad en tránsito
+
+   * Reporta: **CN/SAN**, **vigencia (desde/hasta)** y **emisora** del certificado de un sitio seguro.
+   * Explica qué sucede si **no valida** la cadena (errores de confianza, riesgo de MITM, impacto en UX).
+   * **Captura:** `imagenes/tls-cert.png`, con CN/SAN, emisora y fechas.
+
+**6.4.** Puertos - estado de runtime
+
+   * Enumera **dos puertos en escucha** en tu máquina o entorno y **qué servicios** sugieren.
+   * Explica cómo esta evidencia ayuda a detectar **despliegues incompletos** (puerto no expuesto) o **conflictos** (puerto ocupado).
+   * **Captura:** `imagenes/puertos.png`, con los puertos resaltados.
+
+**6.5.** 12-Factor - port binding, configuración, logs
+
+   * Describe **cómo** parametrizarías el puerto sin tocar código (config externa).
+   * Indica **dónde** verías los logs en ejecución (flujo estándar) y **por qué** no deberías escribirlos en archivos locales rotados a mano.
+   * Señala un **anti-patrón** (p. ej., credenciales en el código) y su impacto en reproducibilidad.
+
+**6.6.** Checklist de diagnóstico (incidente simulado)
+
+   * **Escenario:** usuarios reportan intermitencia. Formula un checklist de **seis pasos ordenados** que permita discriminar:
+     a) contrato HTTP roto, b) resolución DNS inconsistente, c) certificado TLS caducado/incorrecto, d) puerto mal configurado/no expuesto.
+   * Para cada paso, indica: **objetivo**, **evidencia esperada**, **interpretación** y **acción siguiente**.
+   * Evita generalidades; sé **operacional** (si X ocurre, entonces Y decisión).
