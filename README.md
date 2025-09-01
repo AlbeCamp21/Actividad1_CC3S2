@@ -157,6 +157,14 @@ Realiza comprobaciones **con herramientas estándar**, pero **no** pegues los co
    * Explica por qué esas cabeceras influyen en **rendimiento**, **caché** u **observabilidad**.
    * **Captura:** `imagenes/http-evidencia.png`, con los campos resaltados.
 
+![http_evidencia.png](imagenes/http_evidencia.png)
+
+Resultados luego de pasar la página de [UNIVirtual](https://univirtual.uni.pe/) en la página [websniffer](https://websniffer.com)
+
+La petición HTTP se realizó con el método *GET* y se obtuvo como respuesta un código *200 OK*, esto nos indica que el recurso se entregó correctamente.  
+
+Entre las cabeceras obtenidas, está el *Cache-Control: no-store, no-cache*, esto evita almacenar el contenido en caché, asegurando así información siempre actualizada (afecta el rendimiento al necesitar de una descarga constante). También está la cabecera *X-Frame-Options: sameorigin*, que protege contra clickjacking (ataque donde un sitio malicioso engaña al usuario para que haga clic en algo oculto), además de que permite verificar medidas de seguridad al momento de la entrega de contenidos.
+
 **6.2.** DNS - nombres y TTL
 
    * Reporta: **tipo de registro** (A o CNAME) y **TTL** de un dominio.
