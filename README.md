@@ -106,3 +106,43 @@ El teatro de seguridad pasa cuando los equipos cumplen los checklist de controle
   - Se podría comparar los reportes de seguridad entre releases y verificar si la recurrencia de vulnerabilidades ya conocidas se reduce de una manera progresiva.
 - Reducción en el tiempo promedio de solución
   - Se calcularía cuántos días pasan desde que se detecta una vulnerabilidad hasta el momento que se despliega la correción. Si se detecta una reducción, entonces eso indicaría que las prácticas de seguridad son efectivas.
+
+  ---
+
+### **5. CI/CD y estrategias de despliegue (sandbox, canary, azul/verde)**
+
+**5.1.** Inserta una imagen del pipeline o canary en `imagenes/pipeline_canary.png`. 
+
+![pipeline_canary.jpg](imagenes/pipeline_canary.jpg)
+
+El despliegue canary consiste en liberar una versión de una aplicación a un pequeño grupo de usuarios de forma gradual.
+
+En la imagen se puede apreciar como hay un pequeño grupo de usuarios, declarados como 'Early adapters', que reciben una versión más avanzada de la aplicación, mientras que la gran mayoría de usuarios siguen usando la versión actual. Esto se realiza para probar la nueva versión sin afectar a la gran mayoría de usuarios.
+
+**5.2.** Elige **una estrategia** para un microservicio crítico (por ejemplo, autenticación) y justifica.
+
+Se podría elegir la estrategia canary para un microservicio crítico como lo es la autenticación. Esto nos permitiría lanzar una nueva versión solo para un pequeño grupo de usuarios inicialmente. Luego de verificar que todo funciona bien, se aumentaría el despliegue a más usuarios, poco a poco.
+
+Esto ayuda al control del software, debido a que si hay un error, el impacto sería mínimo y se podría corregir de una manera rápida antes de que afecte a todos los usuarios.
+  
+**5.3.**  Crea una **tabla breve** de **riesgos vs. mitigaciones** (al menos tres filas), por ejemplo:
+
+  * Regresión funcional -> validación de contrato antes de promover.
+  * Costo operativo del doble despliegue -> límites de tiempo de convivencia.
+  * Manejo de sesiones -> "draining" y compatibilidad de esquemas.
+  
+| Riesgo | Mitigación |
+|-|-|
+| Regresión funcional | Realización de validaciones completas y minuciosas de compatibilidad antes de mover los cambios a producción. |
+| Costo operativo del doble despliegue | Definir límites claros de tiempo para la convivencia de versiones y para lograr una planificación de la transición gradual. |
+| Manejo de sesiones | Implementación de técnicas de draining de sesiones activas y verificación en que los esquemas de datos mantengan compatibilidad hacia atrás. |
+
+**5.4.** Define un **KPI primario** (p. ej., error 5xx, latencia p95) y un **umbral numérico** con **ventana de observación** para **promoción/abortado**.
+  
+Un KPI primario podría ser la tasa de errores de código 5xx. Pongamos un ejemplo, si durante una ventana de observación de ciertos minutos (30, por ejemplo) la tasa de errores (5xx) supera el 1%, entonces se abortaría la promoción y se revisaría el despliegue. (Amazon Web Services, s. f.)
+
+**5.5.** **Pregunta retadora:** si el KPI técnico se mantiene, pero cae una métrica de producto (conversión), explica por qué **ambos tipos de métricas** deben coexistir en el gate.
+
+Si un KPI técnico se mantiene bien pero cae una métrica de producto (como la conversión, por ejemplo), entonces sería un indicativo de que algo no está funcionando de manera correcta para el usuario, aunque el sistema no muestre ningun error técnicamente.
+
+Es debido a esto que ambos tipos de métricas deberían estar en el gate, así se aseguraría estabilidad por las técnicas y las de producto asegurarían que el cambio realmente aporte valor sin afectar la experiencia del usuario. (Amazon Web Services, s. f.)
