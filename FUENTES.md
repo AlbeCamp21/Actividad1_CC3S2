@@ -1,1 +1,2 @@
 1. Redondo, A. M. F., & Cárdenas, F. D. J. N. (2022). DevOps: un vistazo rápido. Ciencia Huasteca Boletín Científico de la Escuela Superior de Huejutla, 10(19), 35-40.
+2. Amazon Web Services. (s. f.). OPS04-BP01 Identify key performance indicators. AWS Well-Architected Framework. Retrieved September 1, 2025, from AWS website.
