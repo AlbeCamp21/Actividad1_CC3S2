@@ -171,6 +171,8 @@ Entre las cabeceras obtenidas, está el *Cache-Control: no-store, no-cache*, est
    * Explica cómo el **TTL** afecta **rollbacks** y cambios de IP (propagación, ventanas de inconsistencia).
    * **Captura:** `imagenes/dns-ttl.png`, con el TTL destacado.
 
+![dns_ttl.png](imagenes/dns_ttl.png)
+
 **6.3.** TLS - seguridad en tránsito
 
    * Reporta: **CN/SAN**, **vigencia (desde/hasta)** y **emisora** del certificado de un sitio seguro.
