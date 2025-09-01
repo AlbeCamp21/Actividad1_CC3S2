@@ -147,7 +147,9 @@ Si un KPI técnico se mantiene bien pero cae una métrica de producto (como la c
 
 Es debido a esto que ambos tipos de métricas deberían estar en el gate, así se aseguraría estabilidad por las técnicas y las de producto asegurarían que el cambio realmente aporte valor sin afectar la experiencia del usuario. (Amazon Web Services, s. f.)
 
-### **6 Fundamentos prácticos sin comandos (evidencia mínima)**
+---
+
+### **6. Fundamentos prácticos sin comandos (evidencia mínima)**
 
 Realiza comprobaciones **con herramientas estándar**, pero **no** pegues los comandos. En el README escribe los **hallazgos** y la **interpretación**. Adjunta tus capturas en `imagenes/` y **marca** los campos relevantes (códigos, cabeceras, TTL, CN/SAN, fechas, puertos).
 
@@ -172,6 +174,12 @@ Entre las cabeceras obtenidas, está el *Cache-Control: no-store, no-cache*, est
    * **Captura:** `imagenes/dns-ttl.png`, con el TTL destacado.
 
 ![dns_ttl.png](imagenes/dns_ttl.png)
+
+Resultados luego de consultar el dominio [google.com](https://mxtoolbox.com/SuperTool.aspx) en la página [MXToolbox SuperTool](https://mxtoolbox.com/SuperTool.aspx)
+
+El dominio tiene registros de tipo *A* con varias direcciones IP asociadas, además, todas presentan un TTL de *5 minutos*, lo que nos indica que los servidores y cachés DNS pueden mantener la información en memoria por ese determinado tiempo antes de solicitar una actualización.  
+
+Un TTL corto, como en este caso, permite que los cambios de IP se propaguen rápidamente, además de que facilita el uso de rollbacks en caso de que se requiera revertir una configuración. Sin embargo, también implica más consultas a los servidores DNS. Ahora, si el TTL fuera largo, reduciría la carga de consultas pero también podría generar ventanas de inconsistencia, ya que los usuarios podrían seguir usando la IP antigua hasta que expire el TTL.
 
 **6.3.** TLS - seguridad en tránsito
 
