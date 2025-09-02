@@ -249,3 +249,30 @@ Según lo pedido, en un escenario donde los usuarios reportan intermitencia, se 
    - **Objetivo:** confirmar que el servicio realmente está siendo levantado en el puerto configurado.
    - **Evidencia esperada:** si el puerto no aparece abierto quiere decir que el servicio no se desplegó correctamente.  
    - **Interpretación y acción:** podría ser un despliegue incompleto o conflicto con otro proceso, entonces se reiniciaría el servicio o simplemente liberar el puerto.  
+
+---
+
+### **7. Desafíos de DevOps y mitigaciones**
+
+**7.1.** Inserta un diagrama propio o ilustración en `imagenes/desafios_devops.png` con **tres desafíos** anotados (culturales, técnicos, de gobernanza).
+
+![desadesafios_devops.png](imagenes/desafios_devops.png)
+
+El diagrama realizado muestra los tres principales desafíos de DevOps: culturales, técnicos y de gobernanza. Esto nos permite visualizar de manera rápida cómo cada tipo de desafío afecta la implementación de DevOps y nos muestra la necesidad de estrategias para mitigarlos.
+
+**7.2.** Enumera **tres riesgos** con su **mitigación concreta** (rollback, despliegues graduales, revisión cruzada, límites de "blast radius").
+
+- Error en producción: para mitigar este error, se podría aplicar un rollback inmediato a la versión estable.
+- Impacto en todos los usuarios: usar despliegues graduales para limitar el alcance sería una buena opción.
+- Errores no detectados en revisión individual: implementar revisión cruzada entre pares para mitigiar los errores.
+
+
+**7.3.** Diseña un **experimento controlado** para validar que el despliegue gradual reduce riesgo frente a uno "big-bang": define **métrica primaria**, **grupo control**, **criterio de éxito** y **plan de reversión**.
+
+Si se quiere evaluar si un despliegue gradual reduce el riesgo en comparación con un despliegue big-bang, se puede definir como métrica fundamental (primaria) la tasa de errores reportados por los usuarios durante las primeras 24 horas luego del despliegue. Esta permitiría medir el impacto de los cambios en producción y detectar errores antes de que estos afecten a todos los usuarios.
+
+El grupo control está relacionado al escenario común del despliegue completo, donde todos los usuarios reciben la nueva versión al mismo tiempo.
+
+El criterio de éxito será que el grupo experimental presente menos errores o, también, que los problemas se detecten en fases iniciales, evitando afectar a todos los usuarios. Esto demuestra la ventaja que tienen los despliegues graduales frente al enfoque big-bang.
+
+Por último, se establece un plan de reversión, que consiste en que si la métrica primaria excede un umbral definido (por ejemplo, más de un cierto porcentaje de errores 5xx), el despliegue se detiene y se realiza rollback a la versión estable anterior.
