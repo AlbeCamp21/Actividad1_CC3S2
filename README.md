@@ -2,9 +2,9 @@
 
 **Nombre:** Luis Alanya Campos - 20210290J
 
-**Fecha y tiempo invertido:** 
+**Fecha y tiempo invertido:** 02/09/25 - 6 horas invertidas
 
-**Contexto del entorno:** 
+**Contexto del entorno:** Se utilizó WSL para la ejecución de comandos y obtención de información de red y puertos desde un entorno Linux dentro de Windows. Además, se emplearon herramientas en línea como Mermaid para la elaboración de diagramas y WebSniffer para analizar peticiones HTTP y cumplir con lo que se pide en la actividad.
 
 ## Desarrollo de la Actividad 1
 
@@ -276,3 +276,25 @@ El grupo control está relacionado al escenario común del despliegue completo, 
 El criterio de éxito será que el grupo experimental presente menos errores o, también, que los problemas se detecten en fases iniciales, evitando afectar a todos los usuarios. Esto demuestra la ventaja que tienen los despliegues graduales frente al enfoque big-bang.
 
 Por último, se establece un plan de reversión, que consiste en que si la métrica primaria excede un umbral definido (por ejemplo, más de un cierto porcentaje de errores 5xx), el despliegue se detiene y se realiza rollback a la versión estable anterior.
+
+---
+
+### **8. Arquitectura mínima para DevSecOps (HTTP/DNS/TLS + 12-Factor)**
+
+**8.1.** Dibuja un **diagrama propio** en `imagenes/arquitectura-minima.png` con el flujo: **Cliente -> DNS -> Servicio (HTTP) -> TLS**, e indica **dónde** aplicar controles (políticas de caché, validación de certificados, contratos de API, límites de tasa).
+
+![arquitectura_minima.png](imagenes/arquitectura_minima.png)
+
+El diagrama muestra cómo una solicitud del cliente pasa por DNS, llega al Servicio HTTP y se asegura mediante TLS. Notamos como cada nodo tiene un control asociado: el cliente aplica límites de tasa, el DNS gestiona políticas de caché y TTL, el servicio valida el contrato de la API, y TLS garantiza que la comunicación sea segura con validación de certificados.
+
+**8.2.** Explica cómo cada capa contribuye a **despliegues seguros y reproducibles**.
+
+- **Cliente:** al aplicar límites de tasa, se evitan las sobrecargas y se protege al sistema ante estas sobrecargas inesperadas.
+- **DNS:** las políticas de caché y TTL aseguran que todos los clientes obtengan la misma IP y que los cambios se distribuyan de manera controlada, evitando errores inesperados.
+- **Servicio HTTP:** al momento de validar contratos de API (métodos o códigos de respuesta, por ejemplo), se asegura que los cambios no rompan la comunicación con los clientes y, además, que los despliegues sean consistentes entre versiones.
+- **TLS:** la validación de certificados garantiza la confidencialidad e integridad de los datos en tránsito, protegiendo la experiencia del usuario.
+
+**8.3.** Relaciona **dos principios 12-Factor** (config por entorno; logs a stdout) con **evidencias operativas** que un docente podría revisar (por ejemplo, diffs mínimos entre entornos, trazabilidad de logs).
+
+- Configuración por entorno: manejar la configuración con variables de entorno evita que cada despliegue tenga diferencias en el código. La evidencia operativa que un docente podría revisar incluye diffs mínimos entre los entornos, mostrando que los archivos fuente no se modifiquen entre staging y producción.  
+- Logs a stdout/stderr: enviar los logs a la salida estándar permite que cualquier plataforma de orquestación los consiga y centralice los registros de manera uniforme. La evidencia observable incluye trazabilidad completa de logs, demostrando prácticas reproducibles.  
