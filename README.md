@@ -187,6 +187,14 @@ Un TTL corto, como en este caso, permite que los cambios de IP se propaguen ráp
    * Explica qué sucede si **no valida** la cadena (errores de confianza, riesgo de MITM, impacto en UX).
    * **Captura:** `imagenes/tls-cert.png`, con CN/SAN, emisora y fechas.
 
+![tls_cert.png](imagenes/tls_cert.png)
+
+Resultados luego de consultar el dominio [google.com](https://www.ssllabs.com/ssltest/analyze.html?d=google.com) en la página [SSL Labs](https://www.ssllabs.com/)  
+
+El certificado presenta como *Common Name (CN)* y *Subject Alternative Name (SAN)* el dominio *www.google.com*. Tiene una vigencia desde el *11 de agosto de 2025* hasta el *3 de noviembre de 2025*, y fue emitido por la entidad *WE2 (Google Trust Services)*.  
+
+Ahora, si el navegador o cliente no valida la cadena de confianza del certificado, se mostrarían errores de confianza además de alertas de conexión no privada. Esto expone al usuario a ataques de tipo "Man in the Middle" (MITM), que consiste en que un atacante podría interceptar el tráfico. Esto, evidentemente, afecta directamente en la experiencia de usuario, ya que la mayoría de navegadores bloquean el acceso o muestran advertencias que podrían generar desconfianza de los usuarios al sitio.  
+
 **6.4.** Puertos - estado de runtime
 
    * Enumera **dos puertos en escucha** en tu máquina o entorno y **qué servicios** sugieren.
