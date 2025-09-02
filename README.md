@@ -215,9 +215,37 @@ Ahora, esta muestra es útil porque nos permite verificar si los servicios realm
    * Indica **dónde** verías los logs en ejecución (flujo estándar) y **por qué** no deberías escribirlos en archivos locales rotados a mano.
    * Señala un **anti-patrón** (p. ej., credenciales en el código) y su impacto en reproducibilidad.
 
+Para este caso, el puerto de la aplicación no debería estar “fijo” en el código, sino parametrizado por medio de una variable de entorno o archivo de configuración externa (por ejemplo, "PORT=8080" en un `.env`). Esto nos permite mover la aplicación a diferentes entornos sin la necesidad de modificar el código fuente, mejorando la portabilidad.
+
+Hablando de los logs, lo correcto sería que la aplicación escriba siempre en la salida estándar (stdout y stderr). Esto facilita que cualquier orquestador (Kubernetes, por ejemplos) pueda recolectar los registros de forma automática. Ahora, escribir en archivos locales y rotarlos manualmente sería una mala práctica, ya que dificultaría el monitoreo y generaría riesgo de pérdida de información.
+
+Finalmente, un anti-patrón típico es dejar credenciales dentro del código (por ejemplo, una contraseña hardcodeada). Esto, evidentemente, sería un impacto negativo en la seguridad y rompería la reproducibilidad, pues implica exponer información sensible en el código.
+
 **6.6.** Checklist de diagnóstico (incidente simulado)
 
    * **Escenario:** usuarios reportan intermitencia. Formula un checklist de **seis pasos ordenados** que permita discriminar:
      a) contrato HTTP roto, b) resolución DNS inconsistente, c) certificado TLS caducado/incorrecto, d) puerto mal configurado/no expuesto.
    * Para cada paso, indica: **objetivo**, **evidencia esperada**, **interpretación** y **acción siguiente**.
    * Evita generalidades; sé **operacional** (si X ocurre, entonces Y decisión).
+
+Según lo pedido, en un escenario donde los usuarios reportan intermitencia, se puede aplicar un checklist de pasos concretos que permitan ir descartando posibles causas:  
+
+1. **Contrato HTTP**  
+   - **Objetivo:** validar si la aplicación responde con un código de estado esperado (ej. 200).
+   - **Evidencia esperada:** si devuelve 500 o 503, hay un problema en backend.
+   - **Interpretación y acción:** el contrato está roto, entonces se revisaría los logs de aplicación.
+
+2. **Resolución DNS**  
+   - **Objetivo:** comprobar si los clientes están resolviendo la IP correcta.  
+   - **Evidencia esperada:** distintos resolvers pueden entregar IPs diferentes si el TTL es muy bajo o está en plena propagación.  
+   - **Interpretación y acción:** la inconsistencia en resolución puede causar intermitencia → esperar propagación o ajustar TTL.  
+
+3. **Certificado TLS**  
+   - **Objetivo:** validar vigencia y confianza de la cadena.
+   - **Evidencia esperada:** un CN/SAN incorrecto o certificado expirado provocaría rechazos del cliente.
+   - **Interpretación y acción:** errores de confianza podrían simular caídas, entonces se renovaría el certificado o revisar la configuración.
+
+4. **Puertos en escucha**  
+   - **Objetivo:** confirmar que el servicio realmente está siendo levantado en el puerto configurado.
+   - **Evidencia esperada:** si el puerto no aparece abierto quiere decir que el servicio no se desplegó correctamente.  
+   - **Interpretación y acción:** podría ser un despliegue incompleto o conflicto con otro proceso, entonces se reiniciaría el servicio o simplemente liberar el puerto.  
