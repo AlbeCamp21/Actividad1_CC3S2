@@ -207,7 +207,7 @@ Resultados luego de ejecutar el comando `ss -tuln` en mi máquina local.
 
 En este caso se identificaron pocos puertos en escucha, entre ellos el *53 (TCP/UDP)* asociado en la mayoría de casos a un servicio de "DNS local", y el *323 (UDP)* que suele significar "chronyd" o "ntpd", para la sincronización de tiempo.
 
-Ahora, esta muestra es útil porque nos permite verificar si los servicios realmente están activos. En caso de que un puerto esperado no aparezca en escucha, podría significar un despliegue incompleto, o sea, que el servicio no levantó correctamente. En otro caso, si un puerto está ocupado por otro proceso, podría generar un conflicto que podría impedir que la aplicación arranque en el puerto definido.  
+Ahora, esta muestra es útil porque nos permite verificar si los servicios realmente están activos. En caso de que un puerto esperado no aparezca en escucha, podría significar un despliegue incompleto, o sea, que el servicio no levantó correctamente. En otro caso, si un puerto está ocupado por otro proceso, podría generar un conflicto que podría impedir que la aplicación arranque en el puerto definido.
 
 **6.5.** 12-Factor - port binding, configuración, logs
 
